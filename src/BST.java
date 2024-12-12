@@ -2,17 +2,20 @@ import java.util.ArrayList;
 
 /**
  * An Integer Binary Search Tree
- * @author: Your Name Here
- * @version: Date
+ * @author: Veronica Taira
+ * @version: 12/12/24
  */
 
 public class BST {
+    //instance variables
     private BSTNode root;
 
+    //method returns root of BST
     public BSTNode getRoot() {
         return this.root;
     }
 
+    //method sets BSTNode as root
     public void setRoot(BSTNode root) {
         this.root = root;
     }
@@ -50,19 +53,28 @@ public class BST {
         // TODO: Complete the search function
             return searchHelper(root, val);
     }
+
+    //helper function for search function, uses recursion
     public boolean searchHelper(BSTNode current, int val)
     {
+       //if we have reached a node that doesn't exist, return null
         if(current == null)
         {
             return false;
         }
+
+        //if the value we're searching for equals the value of the current node, return true
         if (val == current.getVal())
         {
             return true;
         }
+
+        //if the value is less than the current node value, recursively traverse down the left side of the tree
         else if (val < current.getVal()){
             return searchHelper(current.getLeft(), val);
         }
+
+        //if the value is greater than the current node value, recursively traverse down the right side of the tree
         else {
             return searchHelper(current.getRight(), val);
         }
@@ -76,17 +88,21 @@ public class BST {
         ArrayList<BSTNode> inorder = new ArrayList<>();
         getInorderHelper(root, inorder);
         return inorder;
+
     }
-    public ArrayList<BSTNode> getInorderHelper(BSTNode current, ArrayList<BSTNode> inorder){
+
+    //helper function for getInorder function, returns an ArrayList of nodes
+    public void getInorderHelper(BSTNode current, ArrayList<BSTNode> inorder){
+        //base case: if the current node doesn't exist, return out of the 'if' function
         if (current == null)
         {
-            return null;
+            return;
         }
+
+
             getInorderHelper(current.getLeft(), inorder);
             inorder.add(current);
             getInorderHelper(current.getRight(), inorder);
-
-        return inorder;
     }
 
 
@@ -96,8 +112,8 @@ public class BST {
     public ArrayList<BSTNode> getPreorder() {
         // TODO: Complete preorder traversal
        ArrayList<BSTNode> preorder = new ArrayList<>();
-       preorderHelper(root, preorder);
-       return preorder;
+      return preorderHelper(root, preorder);
+
     }
 
     public ArrayList<BSTNode> preorderHelper(BSTNode current, ArrayList<BSTNode> preorder){
@@ -116,8 +132,8 @@ public class BST {
     public ArrayList<BSTNode> getPostorder() {
         // TODO: Complete postorder traversal
         ArrayList<BSTNode> postorder = new ArrayList<>();
-        postorderHelper(root, postorder);
-        return postorder;
+       return postorderHelper(root, postorder);
+
     }
 
     public ArrayList<BSTNode> postorderHelper(BSTNode current, ArrayList<BSTNode> postorder){
@@ -139,8 +155,35 @@ public class BST {
      */
     public void insert(int val) {
         // TODO: Complete insert
-    }
+        insertHelper(root, val);
 
+
+    }
+    public void insertHelper (BSTNode current, int val)
+    {
+
+        if(val > current.getVal())
+       {
+           if(current.getRight() == null)
+           {
+               current.setRight(new BSTNode(val));
+           }
+           else {
+               insertHelper(current.getRight(), val);
+           }
+
+       }
+       if(val < current.getVal())
+       {
+            if(current.getLeft() == null)
+            {
+                current.setLeft(new BSTNode(val));
+            }
+            else{
+                insertHelper(current.getLeft(), val);
+            }
+       }
+    }
     /**
      * Determines if the current BST is
      * a valid BST.
