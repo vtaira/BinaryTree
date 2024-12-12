@@ -48,7 +48,24 @@ public class BST {
      */
     public boolean search(int val) {
         // TODO: Complete the search function
-        return false;
+            return searchHelper(root, val);
+    }
+    public boolean searchHelper(BSTNode current, int val)
+    {
+        if(current == null)
+        {
+            return false;
+        }
+        if (val == current.getVal())
+        {
+            return true;
+        }
+        else if (val < current.getVal()){
+            return searchHelper(current.getLeft(), val);
+        }
+        else {
+            return searchHelper(current.getRight(), val);
+        }
     }
 
     /**
@@ -56,23 +73,62 @@ public class BST {
      */
     public ArrayList<BSTNode> getInorder() {
         // TODO: Complete inorder traversal
-        return null;
+        ArrayList<BSTNode> inorder = new ArrayList<>();
+        getInorderHelper(root, inorder);
+        return inorder;
     }
+    public ArrayList<BSTNode> getInorderHelper(BSTNode current, ArrayList<BSTNode> inorder){
+        if (current == null)
+        {
+            return null;
+        }
+            getInorderHelper(current.getLeft(), inorder);
+            inorder.add(current);
+            getInorderHelper(current.getRight(), inorder);
+
+        return inorder;
+    }
+
 
     /**
      * @return ArrayList of BSTNodes in preorder
      */
     public ArrayList<BSTNode> getPreorder() {
         // TODO: Complete preorder traversal
-        return null;
+       ArrayList<BSTNode> preorder = new ArrayList<>();
+       preorderHelper(root, preorder);
+       return preorder;
     }
 
+    public ArrayList<BSTNode> preorderHelper(BSTNode current, ArrayList<BSTNode> preorder){
+        if (current == null)
+        {
+            return null;
+        }
+        preorder.add(current);
+        preorderHelper(current.getLeft(), preorder);
+        preorderHelper(current.getRight(), preorder);
+        return preorder;
+    }
     /**
      * @return ArrayList of BSTNodes in postorder
      */
     public ArrayList<BSTNode> getPostorder() {
         // TODO: Complete postorder traversal
-        return null;
+        ArrayList<BSTNode> postorder = new ArrayList<>();
+        postorderHelper(root, postorder);
+        return postorder;
+    }
+
+    public ArrayList<BSTNode> postorderHelper(BSTNode current, ArrayList<BSTNode> postorder){
+        if (current == null)
+        {
+            return null;
+        }
+        postorderHelper(current.getLeft(), postorder);
+        postorderHelper(current.getRight(), postorder);
+        postorder.add(current);
+        return postorder;
     }
 
     /**
