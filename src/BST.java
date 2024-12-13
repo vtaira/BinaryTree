@@ -7,15 +7,15 @@ import java.util.ArrayList;
  */
 
 public class BST {
-    //instance variables
+    // Instance variables
     private BSTNode root;
 
-    //method returns root of BST
+    // Method returns root of BST
     public BSTNode getRoot() {
         return this.root;
     }
 
-    //method sets BSTNode as root
+    // Method sets BSTNode as root
     public void setRoot(BSTNode root) {
         this.root = root;
     }
@@ -54,27 +54,27 @@ public class BST {
             return searchHelper(root, val);
     }
 
-    //helper function for search function, uses recursion
+    // Helper function for search function, uses recursion
     public boolean searchHelper(BSTNode current, int val)
     {
-       //if we have reached a node that doesn't exist, return null
+       // If we have reached a node that doesn't exist, return false
         if(current == null)
         {
             return false;
         }
 
-        //if the value we're searching for equals the value of the current node, return true
+        // If the value we're searching for equals the value of the current node, return true
         if (val == current.getVal())
         {
             return true;
         }
 
-        //if the value is less than the current node value, recursively traverse down the left side of the tree
+        // If the value is less than the current node value, recursively traverse down the left side of the tree
         else if (val < current.getVal()){
             return searchHelper(current.getLeft(), val);
         }
 
-        //if the value is greater than the current node value, recursively traverse down the right side of the tree
+        // If the value is greater than the current node value, recursively traverse down the right side of the tree
         else {
             return searchHelper(current.getRight(), val);
         }
@@ -91,17 +91,20 @@ public class BST {
 
     }
 
-    //helper function for getInorder function, returns an ArrayList of nodes
+    // Helper function for getInorder function, returns an ArrayList of nodes
     public void getInorderHelper(BSTNode current, ArrayList<BSTNode> inorder){
-        //base case: if the current node doesn't exist, return out of the 'if' function
+        // Base case: if the current node doesn't exist, stop recursion
         if (current == null)
         {
             return;
         }
 
-
+            // Recursively traverses through left side of tree until the leftmost node is reached
+            // Adds that node to the inorder ArrayList
             getInorderHelper(current.getLeft(), inorder);
             inorder.add(current);
+
+            // Traverses through the right side of the tree starting at the current node
             getInorderHelper(current.getRight(), inorder);
     }
 
@@ -112,19 +115,26 @@ public class BST {
     public ArrayList<BSTNode> getPreorder() {
         // TODO: Complete preorder traversal
        ArrayList<BSTNode> preorder = new ArrayList<>();
-      return preorderHelper(root, preorder);
+      preorderHelper(root, preorder);
+        return preorder;
 
     }
 
-    public ArrayList<BSTNode> preorderHelper(BSTNode current, ArrayList<BSTNode> preorder){
+    // Helper function for getPreorder(), returns ArrayList of nodes in preorder
+    public void preorderHelper(BSTNode current, ArrayList<BSTNode> preorder){
+       // Base case: if the current node doesn't exist, stop recursion
         if (current == null)
         {
-            return null;
+            return;
         }
+
+        // Add the current node to the preorder array
         preorder.add(current);
+        // Recursively traverse down the BST to the furthest left node, add that to the tree
         preorderHelper(current.getLeft(), preorder);
+        // Rraverse down the BST on the right, adding each node from the bottom up
         preorderHelper(current.getRight(), preorder);
-        return preorder;
+
     }
     /**
      * @return ArrayList of BSTNodes in postorder
@@ -132,19 +142,24 @@ public class BST {
     public ArrayList<BSTNode> getPostorder() {
         // TODO: Complete postorder traversal
         ArrayList<BSTNode> postorder = new ArrayList<>();
-       return postorderHelper(root, postorder);
+       postorderHelper(root, postorder);
+       return postorder;
 
     }
 
-    public ArrayList<BSTNode> postorderHelper(BSTNode current, ArrayList<BSTNode> postorder){
+    // Helper function for getPostorder(), returns an ArrayList of BSTNodes
+    public void postorderHelper(BSTNode current, ArrayList<BSTNode> postorder){
+        // Base case: if the current node doesn't exist, stop recursion
         if (current == null)
         {
-            return null;
+            return;
         }
+        // Recursively traverse the left subtree of the current node
         postorderHelper(current.getLeft(), postorder);
+        // Recursively traverse the right subtree of the current node
         postorderHelper(current.getRight(), postorder);
+        // Add the current node to the postorder ArrayList
         postorder.add(current);
-        return postorder;
     }
 
     /**
@@ -159,26 +174,32 @@ public class BST {
 
 
     }
+    // Helper function for insert(), inserts specific value into BST
     public void insertHelper (BSTNode current, int val)
     {
-
+        // If the value given is less than the current node value, and the node does not have a right child
+        // Set the current node's right child to val
         if(val > current.getVal())
        {
            if(current.getRight() == null)
            {
                current.setRight(new BSTNode(val));
            }
+           // If the node has a right child, recursively travel down the right side of the node
+           // Until the val can be correctly placed
            else {
                insertHelper(current.getRight(), val);
            }
-
        }
+       // If val is less than the current node's value, and the current node doesn't have a left child
+       // Set val as the left child
        if(val < current.getVal())
        {
             if(current.getLeft() == null)
             {
                 current.setLeft(new BSTNode(val));
             }
+            // Else, recursively traverse down the current node's left subtree until val can be placed
             else{
                 insertHelper(current.getLeft(), val);
             }
